@@ -1,24 +1,21 @@
-﻿namespace Snacksy
+﻿using Snacksy.Services;
+
+namespace Snacksy
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
+        private ProductoService _servicio = new();
 
         public MainPage()
         {
             InitializeComponent();
+            CargarProductos();
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
+        private async void CargarProductos()
         {
-            count++;
-
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
+            var productos = await _servicio.ObtenerProductosAsync();
+            ProductosView.ItemsSource = productos;
         }
     }
 
