@@ -1,9 +1,22 @@
-﻿public class Producto
+﻿using Supabase.Postgrest.Attributes;
+using Supabase.Postgrest.Models;
+using System;
+
+namespace Snacksy.Models
 {
-    public int Id { get; set; }
-    public string Nombre { get; set; }
-    public string Categoria { get; set; }
-    public decimal Precio { get; set; }
-    public int Stock { get; set; }
-    public string ImagenUrl { get; set; }
+    [Table("productos")]
+    public class Producto : BaseModel
+    {
+        [PrimaryKey("id", false)]
+        public int Id { get; set; }
+
+        [Column("nombre")]
+        public string Name { get; set; } = string.Empty;
+
+        [Column("precio")]
+        public string Price { get; set; } = string.Empty;
+
+        [Column("stock")]
+        public string Stock { get; set; } = string.Empty;
+    }
 }

@@ -1,0 +1,45 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Snacksy.Views.ProductosPage"
+             BackgroundColor="Black">
+
+    <StackLayout Padding="20" Spacing="20">
+
+        <CollectionView x:Name="productosCollection">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BackgroundColor="White" CornerRadius="10" Padding="10" Margin="0,5">
+                        <StackLayout>
+                            <Label Text="{Binding FullName}"
+                                   TextColor="Black"
+                                   FontSize="16"/>
+                            <Label Text="{Binding Email}"
+                                   TextColor="Gray"
+                                   FontSize="14"/>
+
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="10" Margin="0,5,0,0">
+                                <Button Text="Editar"
+                                        BackgroundColor="Purple"
+                                        TextColor="White"
+                                        WidthRequest="80"
+                                        Clicked="OnEditClicked"/>
+                                <Button Text="Eliminar"
+                                        BackgroundColor="Red"
+                                        TextColor="White"
+                                        WidthRequest="80"
+                                        Clicked="OnDeleteClicked"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Text="Agregar Producto"
+                BackgroundColor="Purple"
+                TextColor="White"
+                CornerRadius="8"
+                HeightRequest="50"
+                Clicked="OnAddClicked"/>
+    </StackLayout>
+</ContentPage>
