@@ -22,36 +22,9 @@ public partial class ProductosPage : ContentPage
 
     private async void OnAddClicked(object sender, EventArgs e)
     {
-        string nombre = await DisplayPromptAsync("Nuevo Producto", "Nombre del producto:");
-        if (string.IsNullOrWhiteSpace(nombre))
-            return;
-
-        string precio = await DisplayPromptAsync("Nuevo Producto", "Precio:");
-        if (string.IsNullOrWhiteSpace(precio))
-            return;
-
-        string stock = await DisplayPromptAsync("Nuevo Producto", "Stock:");
-        if (string.IsNullOrWhiteSpace(stock))
-            return;
-
-        var producto = new Producto
-        {
-            Name = nombre,
-            Price = precio,
-            Stock = stock
-        };
-
-        bool exito = await _productoService.AgregarProducto(producto);
-
-        if (exito)
-        {
-            await DisplayAlert("Éxito", "Producto agregado correctamente", "OK");
-            CargarProductos();
-        }
-        else
-        {
-            await DisplayAlert("Error", "No se pudo agregar el producto", "OK");
-        }
+        var formulario = new ProductosFormPage();
+        formulario.ProductoGuardado += (_, _) => CargarProductos();
+        await Navigation.PushModalAsync(formulario);
     }
 
     private async void OnEditClicked(object sender, EventArgs e)
@@ -60,30 +33,9 @@ public partial class ProductosPage : ContentPage
         var producto = button?.BindingContext as Producto;
         if (producto == null) return;
 
-        string nuevoNombre = await DisplayPromptAsync("Editar Producto", "Nuevo nombre:", initialValue: producto.Name);
-        if (string.IsNullOrWhiteSpace(nuevoNombre)) return;
-
-        string nuevoPrecio = await DisplayPromptAsync("Editar Producto", "Nuevo precio:", initialValue: producto.Price);
-        if (string.IsNullOrWhiteSpace(nuevoPrecio)) return;
-
-        string nuevoStock = await DisplayPromptAsync("Editar Producto", "Nuevo stock:", initialValue: producto.Stock);
-        if (string.IsNullOrWhiteSpace(nuevoStock)) return;
-
-        producto.Name = nuevoNombre;
-        producto.Price = nuevoPrecio;
-        producto.Stock = nuevoStock;
-
-        bool exito = await _productoService.ActualizarProducto(producto);
-
-        if (exito)
-        {
-            await DisplayAlert("Éxito", "Producto actualizado correctamente", "OK");
-            CargarProductos();
-        }
-        else
-        {
-            await DisplayAlert("Error", "No se pudo actualizar el producto", "OK");
-        }
+        var formulario = new ProductosFormPage(producto);
+        formulario.ProductoGuardado += (_, _) => CargarProductos();
+        await Navigation.PushModalAsync(formulario);
     }
 
     private async void OnDeleteClicked(object sender, EventArgs e)

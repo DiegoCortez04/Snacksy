@@ -1,45 +1,76 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Snacksy.Views.ProductosPage"
-             BackgroundColor="Black">
+             BackgroundColor="White">
 
-    <StackLayout Padding="20" Spacing="20">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="10">
 
-        <CollectionView x:Name="productosCollection">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame BackgroundColor="White" CornerRadius="10" Padding="10" Margin="0,5">
-                        <StackLayout>
-                            <Label Text="{Binding FullName}"
-                                   TextColor="Black"
-                                   FontSize="16"/>
-                            <Label Text="{Binding Email}"
-                                   TextColor="Gray"
-                                   FontSize="14"/>
+            <Label Text="CRUD de Productos"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="Black"
+                   HorizontalOptions="Center" />
 
-                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="10" Margin="0,5,0,0">
+            <!-- Encabezado de tabla -->
+            <Grid ColumnSpacing="10" Padding="5" BackgroundColor="#f2f2f2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Text="ID" FontAttributes="Bold" />
+                <Label Text="Nombre" Grid.Column="1" FontAttributes="Bold" />
+                <Label Text="Precio" Grid.Column="2" FontAttributes="Bold" />
+                <Label Text="Stock" Grid.Column="3" FontAttributes="Bold" />
+                <Label Text="Acciones" Grid.Column="4" FontAttributes="Bold" />
+            </Grid>
+
+            <!-- Lista de productos -->
+            <CollectionView x:Name="productosCollection" ItemsSource="{Binding Productos}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnSpacing="10" Padding="5" BackgroundColor="White" HeightRequest="50">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Text="{Binding Id}" VerticalOptions="Center" />
+                            <Label Text="{Binding Name}" Grid.Column="1" VerticalOptions="Center" />
+                            <Label Text="{Binding Price}" Grid.Column="2" VerticalOptions="Center" />
+                            <Label Text="{Binding Stock}" Grid.Column="3" VerticalOptions="Center" />
+
+                            <StackLayout Grid.Column="4" Orientation="Horizontal" Spacing="5">
                                 <Button Text="Editar"
-                                        BackgroundColor="Purple"
-                                        TextColor="White"
-                                        WidthRequest="80"
+                                        BackgroundColor="#FBC02D"
+                                        TextColor="Black"
+                                        Padding="4"
                                         Clicked="OnEditClicked"/>
-                                <Button Text="Eliminar"
-                                        BackgroundColor="Red"
+                                <Button Text="Del"
+                                        BackgroundColor="#E53935"
                                         TextColor="White"
-                                        WidthRequest="80"
+                                        Padding="4"
                                         Clicked="OnDeleteClicked"/>
                             </StackLayout>
-                        </StackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
-        <Button Text="Agregar Producto"
-                BackgroundColor="Purple"
-                TextColor="White"
-                CornerRadius="8"
-                HeightRequest="50"
-                Clicked="OnAddClicked"/>
-    </StackLayout>
+            <Button Text="Agregar Producto"
+                    BackgroundColor="#43A047"
+                    TextColor="White"
+                    CornerRadius="6"
+                    HeightRequest="45"
+                    Clicked="OnAddClicked"
+                    Margin="0,20,0,0"/>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
