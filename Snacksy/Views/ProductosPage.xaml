@@ -73,4 +73,9 @@
                     Margin="0,20,0,0"/>
         </VerticalStackLayout>
     </ScrollView>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="flashlight.png"
+                 Text="Linterna"
+                 Clicked="OnToggleFlashlightClicked" />
+    </ContentPage.ToolbarItems>
 </ContentPage>

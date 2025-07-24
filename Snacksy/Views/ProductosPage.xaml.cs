@@ -1,5 +1,6 @@
 using Snacksy.Models;
 using Snacksy.Services;
+using Microsoft.Maui.ApplicationModel;
 
 namespace Snacksy.Views;
 
@@ -57,6 +58,36 @@ public partial class ProductosPage : ContentPage
         else
         {
             await DisplayAlert("Error", "No se pudo eliminar el producto", "OK");
+        }
+    }
+    private bool linternaEncendida = false;
+
+    private async void OnToggleFlashlightClicked(object sender, EventArgs e)
+    {
+        try
+        {
+            if (linternaEncendida)
+            {
+                await Flashlight.Default.TurnOffAsync(); // método correcto
+                linternaEncendida = false;
+            }
+            else
+            {
+                await Flashlight.Default.TurnOnAsync(); // método correcto
+                linternaEncendida = true;
+            }
+        }
+        catch (FeatureNotSupportedException)
+        {
+            await DisplayAlert("Error", "La linterna no es compatible con este dispositivo.", "OK");
+        }
+        catch (PermissionException)
+        {
+            await DisplayAlert("Error", "No tienes permiso para usar la linterna.", "OK");
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Error inesperado: {ex.Message}", "OK");
         }
     }
 }
